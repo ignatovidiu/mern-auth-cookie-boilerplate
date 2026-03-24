@@ -6,6 +6,8 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 
 import { connectDB } from './db/connectDb.js';
+import userRoutes from './routes/user.route.js';
+import { notFound, errorHandler } from './middleware/error.middleware.js';
 
 connectDB();
 
@@ -18,5 +20,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
+app.use('/api/users', userRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
